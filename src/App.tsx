@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import ErrorPage from "./pages/error/ErrorPage";
-import Dashboard from "./pages/dashboard/Dashboard";
+import ErrorPage from "./pages/error/ErrorPage.tsx";
+import Dashboard from "./pages/dashboard/Dashboard.tsx";
 
 
 export default function App() {
