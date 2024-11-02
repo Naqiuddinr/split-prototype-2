@@ -1,4 +1,3 @@
-import React from 'react'
 import { useAuthenticator } from '@aws-amplify/ui-react'
 
 export default function Dashboard() {
