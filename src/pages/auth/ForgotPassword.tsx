@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { resetPassword } from 'aws-amplify/auth';
 import { useNavigate } from "react-router-dom";
+import { userForgotPassword } from "../../components/authServices";
 
 
 export default function ForgotPassword() {
@@ -10,21 +10,21 @@ export default function ForgotPassword() {
 
     const navigate = useNavigate();
 
-    const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
+    const handleForgotPassword = async (e: React.FormEvent) => {
+        e.preventDefault();
         setError(null);
 
         try {
-            await resetPassword({
-                username: email,
-            })
 
-            navigate(`/resetpassword?email=${encodeURIComponent(email)}`);
+            await userForgotPassword(email);
+            navigate(`/reset-password?email=${encodeURIComponent(email)}`);
 
         } catch (error: unknown) {
+
             const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
             setError(errorMessage);
             console.error(error);
+
         }
     }
 
@@ -38,7 +38,7 @@ export default function ForgotPassword() {
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <form onSubmit={handleSubmit} className="space-y-6">
+                    <form onSubmit={handleForgotPassword} className="space-y-6">
                         <div>
                             <label htmlFor="email" className="flex justify-start text-sm font-medium leading-6 text-gray-900">
                                 Enter your registered Email
@@ -52,7 +52,7 @@ export default function ForgotPassword() {
                                     onChange={(e) => setEmail(e.target.value)}
                                     required
                                     autoComplete="email"
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                             </div>
                         </div>

@@ -1,5 +1,5 @@
-import { signOut, fetchAuthSession } from "aws-amplify/auth";
 import { useEffect } from "react";
+import { confirmCurrentUser, userSignout } from "../../components/authServices";
 import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
@@ -8,9 +8,10 @@ export default function Dashboard() {
     useEffect(() => {
         const checkSession = async () => {
             try {
-                const session = await fetchAuthSession();
+                const session = await confirmCurrentUser();
+                console.log("Session:", session);
 
-                if (!session) {
+                if (!session?.tokens) {
                     navigate("/login");
                 }
             } catch (error) {
@@ -23,8 +24,10 @@ export default function Dashboard() {
     }, [navigate]);
 
     const handleSignout = async () => {
-        await signOut();
+
+        await userSignout();
         navigate("/login");
+
     };
 
     return (

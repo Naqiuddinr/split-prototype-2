@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { signUp, confirmSignUp } from 'aws-amplify/auth';
+import { resendSignUpCode } from 'aws-amplify/auth';
+import { userConfirmSignup } from "../../components/authServices";
 
 
 export default function VerifyEmail() {
+
     const [code, setCode] = useState("");
     const [error, setError] = useState<string | null>(null);
 
@@ -11,39 +13,40 @@ export default function VerifyEmail() {
     const location = useLocation();
     const params = new URLSearchParams(location.search);
     const email = params.get('email') || "";
-    const password = params.get('p') || "";
 
-    const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
+    const handleVerifyEmail = async (e: React.FormEvent) => {
+        e.preventDefault();
         setError(null);
 
         try {
-            await confirmSignUp({
-                username: email,
-                confirmationCode: code,
-            })
 
+            await userConfirmSignup(email, code);
             navigate("/login");
+
         } catch (error: unknown) {
+
             const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
             setError(errorMessage);
             console.error(error);
+
         }
     }
 
-    const handleResendCode = async (event: React.FormEvent) => {
-        event.preventDefault();
+    const handleResendCode = async (e: React.FormEvent) => {
+        e.preventDefault();
         setError(null);
 
         try {
-            await signUp({
-                username: email,
-                password,
-            })
+
+            await resendSignUpCode({ username: email });
+            alert("Verification code has been resent to your email.");
+
         } catch (error: unknown) {
+
             const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
             setError(errorMessage);
             console.error(error);
+
         }
     }
 
@@ -57,7 +60,7 @@ export default function VerifyEmail() {
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <form onSubmit={handleSubmit} className="space-y-6">
+                    <form onSubmit={handleVerifyEmail} className="space-y-6">
                         <div>
                             <label htmlFor="verify-code" className="flex justify-start text-sm font-medium leading-6 text-gray-900">
                                 Confirmation Code

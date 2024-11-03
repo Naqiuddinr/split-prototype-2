@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { confirmResetPassword, resetPassword } from 'aws-amplify/auth';
+import { resetPassword } from 'aws-amplify/auth';
+import { userConfirmResetPassword } from "../../components/authServices";
 import { useLocation, useNavigate } from "react-router-dom";
 
 
@@ -14,22 +15,21 @@ export default function ResetPassword() {
     const params = new URLSearchParams(location.search);
     const email = params.get('email') || "";
 
-    const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
+    const handleResetPassword = async (e: React.FormEvent) => {
+        e.preventDefault();
         setError(null);
 
         try {
-            await confirmResetPassword({
-                username: email,
-                confirmationCode: code,
-                newPassword: newPassword,
-            })
 
+            await userConfirmResetPassword(email, code, newPassword)
             navigate("/login");
+
         } catch (error: unknown) {
+
             const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
             setError(errorMessage);
             console.error(error);
+
         }
     }
 
@@ -38,13 +38,17 @@ export default function ResetPassword() {
         setError(null);
 
         try {
+
             await resetPassword({
                 username: email,
             })
+
         } catch (error: unknown) {
+
             const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
             setError(errorMessage);
             console.error(error);
+
         }
     }
 
@@ -58,55 +62,51 @@ export default function ResetPassword() {
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <form onSubmit={handleSubmit} className="space-y-6">
+                    <form onSubmit={handleResetPassword} className="space-y-6">
                         <div>
-                            <label htmlFor="email" className="flex justify-start text-sm font-medium leading-6 text-gray-900">
+                            <label htmlFor="code" className="flex justify-start text-sm font-medium leading-6 text-gray-900">
                                 Verification Code
                             </label>
                             <div className="mt-2">
                                 <input
+                                    id="code"
                                     value={code}
                                     onChange={(e) => setCode(e.target.value)}
                                     required
-                                    autoComplete="email"
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                             </div>
                         </div>
 
                         <div>
                             <div className="flex items-center justify-between">
-                                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+                                <label htmlFor="newPassword" className="block text-sm font-medium leading-6 text-gray-900">
                                     New Password
                                 </label>
                             </div>
                             <div className="mt-2">
                                 <input
-                                    id="password"
-                                    name="password"
+                                    id="newPassword"
                                     type="password"
                                     value={newPassword}
                                     onChange={(e) => setNewPassword(e.target.value)}
                                     required
-                                    autoComplete="current-password"
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                             </div>
                             <div className="mt-4 flex items-center justify-between">
-                                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+                                <label htmlFor="confirmPassword" className="block text-sm font-medium leading-6 text-gray-900">
                                     Confirm New Password
                                 </label>
                             </div>
                             <div className="mt-2">
                                 <input
-                                    id="password"
-                                    name="password"
+                                    id="confirmPassword"
                                     type="password"
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
                                     required
-                                    autoComplete="current-password"
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                             </div>
                         </div>

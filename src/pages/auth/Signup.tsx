@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { signUp } from "aws-amplify/auth";
+import { userSignup } from "../../components/authServices"
 import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
@@ -11,25 +11,28 @@ export default function Signup() {
 
     const navigate = useNavigate();
 
-    const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
         setError(null);
 
         try {
-            await signUp({
-                username: email,
-                password,
-            });
-            alert("Sign-up successful! Please check your email for verification.");
 
-            navigate(`/verify-email?email=${encodeURIComponent(email)}&p=${encodeURI(password)}`);
+            await userSignup(email, password);
+            alert("Sign-up successful! Please check your email for verification.");
+            navigate(`/verify-email?email=${encodeURIComponent(email)}`);
+
         } catch (error: unknown) {
+
             const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
             setError(errorMessage);
             console.error(error);
+
         } finally {
+
             setEmail("");
             setPassword("");
+            setConfirmPassword("");
+
         }
     };
 
@@ -85,14 +88,14 @@ export default function Signup() {
                                 />
                             </div>
                             <div className="mt-4 flex items-center justify-between">
-                                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+                                <label htmlFor="confirmPassword" className="block text-sm font-medium leading-6 text-gray-900">
                                     Confirm Password
                                 </label>
                             </div>
                             <div className="mt-2">
                                 <input
-                                    id="password"
-                                    name="password"
+                                    id="confirmPassword"
+                                    name="confirmPassword"
                                     type="password"
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}

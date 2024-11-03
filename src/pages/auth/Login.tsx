@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { signIn } from "aws-amplify/auth";
+import { userSignin } from "../../components/authServices";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
@@ -10,24 +10,26 @@ export default function Login() {
 
     const navigate = useNavigate();
 
-    const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
+    const handleSignin = async (e: React.FormEvent) => {
+        e.preventDefault();
         setError(null);
 
         try {
-            await signIn({
-                username: email,
-                password,
-            });
 
+            await userSignin(email, password);
             navigate("/");
+
         } catch (error: unknown) {
+
             const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
             setError(errorMessage);
             console.error(error);
+
         } finally {
+
             setEmail("");
             setPassword("");
+
         }
     };
 
@@ -50,7 +52,7 @@ export default function Login() {
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <form onSubmit={handleSubmit} className="space-y-6">
+                    <form onSubmit={handleSignin} className="space-y-6">
                         <div>
                             <label htmlFor="email" className="flex justify-start text-sm font-medium leading-6 text-gray-900">
                                 Email address
@@ -64,7 +66,7 @@ export default function Login() {
                                     onChange={(e) => setEmail(e.target.value)}
                                     required
                                     autoComplete="email"
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    className="p-1.5 block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                             </div>
                         </div>
@@ -84,7 +86,7 @@ export default function Login() {
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
                                     autoComplete="current-password"
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                             </div>
                             <div className="mt-2 flex justify-end">
