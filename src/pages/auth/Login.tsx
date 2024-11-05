@@ -1,18 +1,18 @@
 import { useState } from "react"
-import { userSignin } from "../../components/authServices";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../components/useAuth";
 
 export default function Login() {
 
+    const { userSignin, error, setError } = useAuth();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState<string | null>(null);
 
     const navigate = useNavigate();
 
     const handleSignin = async (e: React.FormEvent) => {
         e.preventDefault();
-        setError(null);
 
         try {
 
@@ -20,15 +20,12 @@ export default function Login() {
             navigate("/");
 
         } catch (error: unknown) {
-
-            const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
-            setError(errorMessage);
             console.error(error);
-
         } finally {
 
             setEmail("");
             setPassword("");
+            setError(null);
 
         }
     };

@@ -1,22 +1,22 @@
-import { confirmResetPassword, confirmSignUp, fetchAuthSession, resetPassword, signIn, signOut, signUp } from "aws-amplify/auth";
+import { confirmResetPassword, confirmSignUp, fetchAuthSession, resetPassword, signOut } from "aws-amplify/auth";
 
 
-export async function userSignup(email: string, password: string) {
-    try {
+// export async function userSignup(email: string, password: string) {
+//     try {
 
-        await signUp({
-            username: email,
-            password,
-        });
-        return true;
+//         await signUp({
+//             username: email,
+//             password,
+//         });
+//         return true;
 
-    } catch (error: unknown) {
+//     } catch (error: unknown) {
 
-        const errorMessage: string = error instanceof Error ? error.message : "Unknown error occured";
-        throw new Error(errorMessage);
+//         const errorMessage: string = error instanceof Error ? error.message : "Unknown error occured";
+//         throw new Error(errorMessage);
 
-    }
-}
+//     }
+// }
 
 export async function userConfirmSignup(email: string, code: string) {
     try {
@@ -35,22 +35,22 @@ export async function userConfirmSignup(email: string, code: string) {
     }
 }
 
-export async function userSignin(email: string, password: string) {
-    try {
+// export async function userSignin(email: string, password: string) {
+//     try {
 
-        await signIn({
-            username: email,
-            password
-        });
-        return true;
+//         await signIn({
+//             username: email,
+//             password
+//         });
+//         return true;
 
-    } catch (error: unknown) {
+//     } catch (error: unknown) {
 
-        const errorMessage: string = error instanceof Error ? error.message : "Unknown error occured";
-        throw new Error(errorMessage);
+//         const errorMessage: string = error instanceof Error ? error.message : "Unknown error occured";
+//         throw new Error(errorMessage);
 
-    }
-}
+//     }
+// }
 
 export async function userForgotPassword(email: string) {
     try {
