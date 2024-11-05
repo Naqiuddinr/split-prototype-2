@@ -1,27 +1,9 @@
-import { useEffect } from "react";
-import { confirmCurrentUser, userSignout } from "../../components/authServices";
+import { userSignout } from "../../components/authServices";
 import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
+
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const checkSession = async () => {
-            try {
-                const session = await confirmCurrentUser();
-                console.log("Session:", session);
-
-                if (!session?.tokens) {
-                    navigate("/login");
-                }
-            } catch (error) {
-                console.error("Failed to fetch session", error);
-                navigate("/login");
-            }
-        };
-
-        checkSession();
-    }, [navigate]);
 
     const handleSignout = async () => {
 
