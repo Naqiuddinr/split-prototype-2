@@ -13,6 +13,7 @@ export default function Login() {
 
     const handleSignin = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError(null);
 
         try {
 
@@ -25,7 +26,6 @@ export default function Login() {
 
             setEmail("");
             setPassword("");
-            setError(null);
 
         }
     };

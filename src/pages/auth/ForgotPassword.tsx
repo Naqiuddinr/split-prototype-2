@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { userForgotPassword } from "../../components/authServices";
+import { useAuth } from "../../components/useAuth";
 
 
 export default function ForgotPassword() {
 
+    const { userForgotPassword, error, setError } = useAuth();
+
     const [email, setEmail] = useState("");
-    const [error, setError] = useState<string | null>(null);
 
     const navigate = useNavigate();
 
@@ -20,11 +21,7 @@ export default function ForgotPassword() {
             navigate(`/reset-password?email=${encodeURIComponent(email)}`);
 
         } catch (error: unknown) {
-
-            const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
-            setError(errorMessage);
             console.error(error);
-
         }
     }
 

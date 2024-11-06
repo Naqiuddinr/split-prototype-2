@@ -1,5 +1,15 @@
 import { createContext, useEffect, useState, ReactNode } from 'react';
-import { fetchAuthSession, getCurrentUser, signIn, signUp, type AuthUser } from 'aws-amplify/auth';
+import {
+    confirmResetPassword,
+    confirmSignUp,
+    fetchAuthSession,
+    getCurrentUser,
+    resetPassword,
+    signIn,
+    signOut,
+    signUp,
+    type AuthUser
+} from 'aws-amplify/auth';
 
 interface AuthContextType {
     isAuthenticated: boolean;
@@ -9,6 +19,10 @@ interface AuthContextType {
     setError: (error: string | null) => void;
     userSignin: (email: string, password: string) => Promise<boolean>;
     userSignup: (email: string, password: string) => Promise<boolean>;
+    userConfirmSignup: (email: string, password: string) => Promise<boolean>;
+    userForgotPassword: (email: string) => Promise<boolean>;
+    userConfirmResetPassword: (email: string, code: string, newPassword: string) => Promise<boolean>;
+    userSignout: () => void;
 }
 
 export const AuthContext = createContext<AuthContextType>({
@@ -19,6 +33,10 @@ export const AuthContext = createContext<AuthContextType>({
     setError: () => { },
     userSignin: async () => false,
     userSignup: async () => false,
+    userConfirmSignup: async () => false,
+    userForgotPassword: async () => false,
+    userConfirmResetPassword: async () => false,
+    userSignout: async () => false,
 });
 
 interface AuthProviderProps {
@@ -75,6 +93,69 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         }
     }
 
+    const userConfirmSignup = async (email: string, code: string) => {
+        try {
+
+            await confirmSignUp({
+                username: email,
+                confirmationCode: code,
+            })
+            return true;
+
+        } catch (error: unknown) {
+
+            const errorMessage: string = error instanceof Error ? error.message : "Unknown error occured";
+            throw new Error(errorMessage);
+
+        }
+    }
+
+    const userForgotPassword = async (email: string) => {
+        try {
+
+            await resetPassword({
+                username: email,
+            })
+            return true;
+
+        } catch (error: unknown) {
+
+            const errorMessage: string = error instanceof Error ? error.message : "Unknown error occured";
+            throw new Error(errorMessage);
+
+        }
+    }
+
+    const userConfirmResetPassword = async (email: string, code: string, newPassword: string) => {
+        try {
+
+            await confirmResetPassword({
+                username: email,
+                confirmationCode: code,
+                newPassword
+            })
+            return true;
+
+        } catch (error: unknown) {
+
+            const errorMessage: string = error instanceof Error ? error.message : "Unknown error occured";
+            throw new Error(errorMessage);
+
+        }
+    }
+
+    const userSignout = async () => {
+        try {
+
+            await signOut();
+
+        } catch (error) {
+
+            console.error('Error signing out:', error);
+
+        }
+    }
+
     const value = {
         isAuthenticated,
         isLoading,
@@ -82,7 +163,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         error,
         setError,
         userSignin,
-        userSignup
+        userSignup,
+        userConfirmSignup,
+        userForgotPassword,
+        userConfirmResetPassword,
+        userSignout,
     };
 
     return (

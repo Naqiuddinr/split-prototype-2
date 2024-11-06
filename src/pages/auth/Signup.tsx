@@ -14,6 +14,7 @@ export default function Signup() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError(null);
 
         try {
 
@@ -28,7 +29,6 @@ export default function Signup() {
             setEmail("");
             setPassword("");
             setConfirmPassword("");
-            setError(null);
 
         }
     };

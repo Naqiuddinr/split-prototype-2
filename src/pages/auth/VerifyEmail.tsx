@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { resendSignUpCode } from 'aws-amplify/auth';
-import { userConfirmSignup } from "../../components/authServices";
+import { useAuth } from "../../components/useAuth";
 
 
 export default function VerifyEmail() {
 
+    const { userConfirmSignup, error, setError } = useAuth();
+
     const [code, setCode] = useState("");
-    const [error, setError] = useState<string | null>(null);
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -42,11 +43,7 @@ export default function VerifyEmail() {
             alert("Verification code has been resent to your email.");
 
         } catch (error: unknown) {
-
-            const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
-            setError(errorMessage);
             console.error(error);
-
         }
     }
 

@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { resetPassword } from 'aws-amplify/auth';
-import { userConfirmResetPassword } from "../../components/authServices";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../components/useAuth";
 
 
 export default function ResetPassword() {
+
+    const { userConfirmResetPassword, error, setError } = useAuth();
+
     const [code, setCode] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [error, setError] = useState<string | null>(null);
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -25,11 +27,7 @@ export default function ResetPassword() {
             navigate("/login");
 
         } catch (error: unknown) {
-
-            const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
-            setError(errorMessage);
             console.error(error);
-
         }
     }
 
