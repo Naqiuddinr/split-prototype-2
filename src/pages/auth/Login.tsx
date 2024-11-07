@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../components/auth/useAuth";
-import { PasswordInput } from "../../components/form-input/passwordInput";
+import { PasswordInput } from "../../components/form-input/passwordInput.tsx";
 
 export default function Login() {
 
