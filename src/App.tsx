@@ -11,8 +11,8 @@ import ForgotPassword from "./pages/auth/ForgotPassword.tsx";
 import ResetPassword from "./pages/auth/ResetPassword.tsx";
 import Signup from "./pages/auth/Signup.tsx";
 import VerifyEmail from "./pages/auth/VerifyEmail.tsx";
-import { AuthProvider } from "./components/authContext.tsx";
-import { ProtectedRoute } from "./components/ProtectedRoutes.tsx";
+import { AuthProvider } from "./components/auth/authContext.tsx";
+import { ProtectedRoute } from "./components/auth/ProtectedRoutes.tsx";
 
 Amplify.configure(outputs);
 

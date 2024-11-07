@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { resetPassword } from 'aws-amplify/auth';
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../../components/useAuth";
+import { useAuth } from "../../components/auth/useAuth";
 
 
 export default function ResetPassword() {

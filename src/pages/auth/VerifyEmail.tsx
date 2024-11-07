@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { resendSignUpCode } from 'aws-amplify/auth';
-import { useAuth } from "../../components/useAuth";
+import { useAuth } from "../../components/auth/useAuth";
 
 
 export default function VerifyEmail() {

@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../components/useAuth";
+import { useAuth } from "../../components/auth/useAuth";
+import { PasswordInput } from "../../components/form-input/passwordInput";
 
 export default function Login() {
 
@@ -75,7 +76,7 @@ export default function Login() {
                                 </label>
                             </div>
                             <div className="mt-2">
-                                <input
+                                {/* <input
                                     id="password"
                                     name="password"
                                     type="password"
@@ -84,7 +85,8 @@ export default function Login() {
                                     required
                                     autoComplete="current-password"
                                     className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
+                                /> */}
+                                <PasswordInput value={password} onChange={setPassword} />
                             </div>
                             <div className="mt-2 flex justify-end">
                                 <p className="text-sm text-slate-500">
