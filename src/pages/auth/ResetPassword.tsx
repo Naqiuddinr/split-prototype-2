@@ -2,6 +2,7 @@ import { useState } from "react";
 import { resetPassword } from 'aws-amplify/auth';
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../components/auth/useAuth";
+import { PasswordInput } from "../../components/form-input/PasswordInput";
 
 
 export default function ResetPassword() {
@@ -83,14 +84,7 @@ export default function ResetPassword() {
                                 </label>
                             </div>
                             <div className="mt-2">
-                                <input
-                                    id="newPassword"
-                                    type="password"
-                                    value={newPassword}
-                                    onChange={(e) => setNewPassword(e.target.value)}
-                                    required
-                                    className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
+                                <PasswordInput value={newPassword} onChange={setNewPassword} />
                             </div>
                             <div className="mt-4 flex items-center justify-between">
                                 <label htmlFor="confirmPassword" className="block text-sm font-medium leading-6 text-gray-900">
@@ -98,14 +92,7 @@ export default function ResetPassword() {
                                 </label>
                             </div>
                             <div className="mt-2">
-                                <input
-                                    id="confirmPassword"
-                                    type="password"
-                                    value={confirmPassword}
-                                    onChange={(e) => setConfirmPassword(e.target.value)}
-                                    required
-                                    className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
+                                <PasswordInput value={confirmPassword} onChange={setConfirmPassword} />
                             </div>
                         </div>
 
