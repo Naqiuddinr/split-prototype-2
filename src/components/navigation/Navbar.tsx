@@ -1,20 +1,20 @@
 import {
     AppBar,
     Box,
-    // Button,
     Drawer,
     IconButton,
     Toolbar,
-    Typography
 } from '@mui/material';
-// import SettingsIcon from '@mui/icons-material/Settings';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import SettingsIcon from '@mui/icons-material/Settings';
+import HomeIcon from '@mui/icons-material/Home';
 import { useState } from 'react';
 import { useAuth } from '../auth/useAuth';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 
 export default function Navbar() {
+
+    const navigate = useNavigate();
 
     const [showDrawer, setShowDrawer] = useState(false);
 
@@ -22,22 +22,26 @@ export default function Navbar() {
         <>
             <Box sx={{ flexGrow: 1 }}>
                 <AppBar position="static" sx={{ backgroundColor: "white", boxShadow: "none", borderBottom: "1px solid #e5e7eb" }}>
-                    <Toolbar>
-                        <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: "black" }}>
-                            Tong2
-                        </Typography>
+                    <Toolbar className='flex justify-between'>
+                        <IconButton
+                            size="large"
+                            aria-label="menu"
+                            onClick={() => navigate("/")}
+                        >
+                            <HomeIcon />
+                        </IconButton>
                         <IconButton
                             size="large"
                             aria-label="menu"
                             onClick={() => setShowDrawer(!showDrawer)}
                         >
-                            <AccountCircleIcon />
+                            <SettingsIcon />
                         </IconButton>
                     </Toolbar>
                 </AppBar>
             </Box>
             <SettingDrawer showDrawer={showDrawer} setShowDrawer={setShowDrawer} />
-            {/* <SwipeableDrawer onClose={ } onOpen={ } /> */}
+            <Outlet />
         </>
     )
 }
