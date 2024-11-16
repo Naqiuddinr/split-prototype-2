@@ -56,7 +56,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const checkAuth = async () => {
         try {
             const authUser = await getCurrentUser();
-            console.log(authUser);
             await fetchAuthSession(); // We keep the await to ensure session is valid
 
             setIsAuthenticated(true);

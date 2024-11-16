@@ -14,6 +14,7 @@ import VerifyEmail from "./pages/auth/VerifyEmail.tsx";
 import { AuthProvider } from "./components/auth/authContext.tsx";
 import { ProtectedRoute } from "./components/auth/ProtectedRoutes.tsx";
 import Navbar from "./components/navigation/Navbar.tsx";
+import UploadReceipt from "./pages/upload-receipt/UploadReceipt.tsx";
 
 Amplify.configure(outputs);
 
@@ -31,6 +32,7 @@ export default function App() {
             <Route path="/verify-email" element={<VerifyEmail />} />
             <Route path="/" element={<ProtectedRoute><Navbar /></ProtectedRoute>}>
               <Route index element={<Dashboard />} />
+              <Route path="/upload" element={<UploadReceipt />} />
             </Route>
             <Route path="*" element={<ErrorPage />} />
           </Routes>

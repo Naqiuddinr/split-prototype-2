@@ -2,10 +2,13 @@ import { Button, Card, CardContent, IconButton, Paper, Typography } from "@mui/m
 import SearchIcon from '@mui/icons-material/Search';
 import GroupsIcon from '@mui/icons-material/Groups';
 import Divider from '@mui/material/Divider';
+import { useNavigate } from "react-router-dom";
 
 
 
 export default function Dashboard() {
+
+    const navigate = useNavigate();
 
     return (
         <>
@@ -27,7 +30,7 @@ export default function Dashboard() {
             </div>
 
             <div className="flex justify-center mx-8 my-4">
-                <Button variant="contained" color="success" disableElevation={true} fullWidth={true} sx={{ textTransform: "none" }}>
+                <Button variant="contained" color="success" disableElevation={true} fullWidth={true} sx={{ textTransform: "none" }} onClick={() => navigate('/upload')}>
                     <Typography>
                         Add Receipt
                     </Typography>
