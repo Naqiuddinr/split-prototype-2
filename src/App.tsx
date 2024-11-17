@@ -15,6 +15,7 @@ import { AuthProvider } from "./components/auth/authContext.tsx";
 import { ProtectedRoute } from "./components/auth/ProtectedRoutes.tsx";
 import Navbar from "./components/navigation/Navbar.tsx";
 import UploadReceipt from "./pages/upload-receipt/UploadReceipt.tsx";
+import AddMember from "./pages/add-member/AddMember.tsx";
 
 Amplify.configure(outputs);
 
@@ -33,6 +34,7 @@ export default function App() {
             <Route path="/" element={<ProtectedRoute><Navbar /></ProtectedRoute>}>
               <Route index element={<Dashboard />} />
               <Route path="/upload" element={<UploadReceipt />} />
+              <Route path="/add-member" element={<AddMember />} />
             </Route>
             <Route path="*" element={<ErrorPage />} />
           </Routes>

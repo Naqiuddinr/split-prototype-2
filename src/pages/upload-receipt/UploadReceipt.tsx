@@ -3,6 +3,7 @@ import UploadFileIcon from '@mui/icons-material/UploadFile';
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 import StepNav from '../../components/navigation/StepNav';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 const VisuallyHiddenInput = styled('input')({
@@ -19,12 +20,13 @@ const VisuallyHiddenInput = styled('input')({
 
 export default function UploadReceipt() {
 
+    const navigate = useNavigate();
+
     const [file, setFile] = useState<string | null>(null);
 
     const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             setFile(URL.createObjectURL(e.target.files[0]));
-            console.log(file);
         }
     }
 
@@ -89,8 +91,8 @@ export default function UploadReceipt() {
                 </div>
 
                 {/* Bottom div */}
-                <div className=''>
-                    <Button variant="contained" color="success" disableElevation={true} fullWidth={true} sx={{ textTransform: "none" }} disabled={file ? false : true}>
+                <div className='mb-2'>
+                    <Button variant="contained" color="success" disableElevation={true} fullWidth={true} sx={{ textTransform: "none" }} disabled={file ? false : true} onClick={() => navigate("/add-member")}>
                         <Typography>Continue</Typography>
                     </Button>
                     <div className='my-4'>
