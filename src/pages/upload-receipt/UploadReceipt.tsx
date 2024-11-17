@@ -31,63 +31,75 @@ export default function UploadReceipt() {
 
     return (
         <>
-            <div className='min-h-screen flex flex-col justify-between mx-8'>
-                <div className='flex-grow'>
+            <div className='mx-8'>
+
+                <div>
                     <div className='my-8'>
                         <StepNav activeStep={0} />
                     </div>
 
-                    <div className='flex justify-center mt-24'>
-                        <Button
-                            component="label"
-                            role={undefined}
-                            variant="contained"
-                            tabIndex={-1}
-                            startIcon={<UploadFileIcon />}
-                        >
-                            Upload files
-                            <VisuallyHiddenInput
-                                type="file"
-                                onChange={handleUpload}
-                            />
-                        </Button>
-                    </div>
+                    {!file && (
+                        <div className='min-h-80'>
+                            <div className='flex justify-center mt-24'>
+                                <Button
+                                    component="label"
+                                    role={undefined}
+                                    variant="contained"
+                                    tabIndex={-1}
+                                    startIcon={<UploadFileIcon />}
+                                >
+                                    Upload files
+                                    <VisuallyHiddenInput
+                                        type="file"
+                                        onChange={handleUpload}
+                                    />
+                                </Button>
+                            </div>
 
-                    <div className='flex justify-center my-4'>
-                        <Typography variant='caption' sx={{ color: 'text.secondary', fontSize: 10 }}>
-                            Or
-                        </Typography>
-                    </div>
+                            <div className='flex justify-center my-4'>
+                                <Typography variant='caption' sx={{ color: 'text.secondary', fontSize: 10 }}>
+                                    Or
+                                </Typography>
+                            </div>
 
-                    <div className='flex justify-center'>
-                        <Button
-                            component="label"
-                            role={undefined}
-                            variant="contained"
-                            tabIndex={-1}
-                            startIcon={<CameraAltOutlinedIcon />}
-                        >
-                            Take a picture
-                            <VisuallyHiddenInput
-                                type="file"
-                                onChange={handleUpload}
-                                capture='environment'
-                            />
-                        </Button>
-                    </div>
+                            <div className='flex justify-center'>
+                                <Button
+                                    component="label"
+                                    role={undefined}
+                                    variant="contained"
+                                    tabIndex={-1}
+                                    startIcon={<CameraAltOutlinedIcon />}
+                                >
+                                    Take a picture
+                                    <VisuallyHiddenInput
+                                        type="file"
+                                        onChange={handleUpload}
+                                        capture='environment'
+                                    />
+                                </Button>
+                            </div>
+                        </div>
+                    )}
+
+                    {file && (
+                        <div className='min-h-80 flex justify-center items-center'>
+                            <img src={file} />
+                        </div>
+                    )}
                 </div>
 
                 {/* Bottom div */}
-                <div className='mb-16'>
-                    <Button variant="contained" color="success" disableElevation={true} fullWidth={true} sx={{ textTransform: "none" }} disabled>
+                <div className=''>
+                    <Button variant="contained" color="success" disableElevation={true} fullWidth={true} sx={{ textTransform: "none" }} disabled={file ? false : true}>
                         <Typography>Continue</Typography>
                     </Button>
                     <div className='my-4'>
-                        <Button disableElevation={true} fullWidth={true} sx={{ textTransform: "none", color: "text.secondary" }}>
+                        <Button disableElevation={true} fullWidth={true} sx={{ textTransform: "none", color: "text.secondary" }} onClick={() => setFile(null)}>
                             <Typography>Back</Typography>
                         </Button>
                     </div>
                 </div>
+
             </div>
         </>
     )
