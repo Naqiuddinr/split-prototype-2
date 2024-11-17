@@ -1,6 +1,7 @@
 
 import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 import StepNav from "../../components/navigation/StepNav";
 import { useState } from "react";
 
@@ -62,7 +63,7 @@ export default function AddMember() {
                                                         size="small"
                                                         onClick={() => handleRemoveMember(index)}
                                                     >
-                                                        x
+                                                        <DeleteIcon />
                                                     </Button>
                                                 </div>
                                             </TableCell>
