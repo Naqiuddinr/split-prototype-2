@@ -20,7 +20,7 @@ export default function Navbar() {
 
     return (
         <>
-            <Box sx={{ flexGrow: 1 }}>
+            <Box className="flex-none">
                 <AppBar position="static" sx={{ backgroundColor: "white", boxShadow: "none", borderBottom: "1px solid #e5e7eb" }}>
                     <Toolbar className='flex justify-between'>
                         <IconButton
