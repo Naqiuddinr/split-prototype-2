@@ -1,13 +1,13 @@
 
 import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
-import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
+import AddIcon from '@mui/icons-material/Add';
 import StepNav from "../../components/navigation/StepNav";
 import { useState } from "react";
 
 
 export default function AddMember() {
 
-    const [members, setMembers] = useState(['user']);
+    const [members, setMembers] = useState(['User']);
     const [newMember, setNewMember] = useState('');
 
     const handleAddMember = () => {
@@ -15,6 +15,10 @@ export default function AddMember() {
             setMembers([...members, newMember]);
             setNewMember(''); // Clear the TextField
         }
+    };
+
+    const handleRemoveMember = (index: number) => {
+        setMembers(members.filter((_, i) => i !== index));
     };
 
     return (
@@ -28,7 +32,7 @@ export default function AddMember() {
                     <div className="flex justify-center">
                         <TextField label="Add Member" variant="outlined" size="small" value={newMember} onChange={(e) => setNewMember(e.target.value)} />
                         <Button variant="contained" color="primary" sx={{ marginInlineStart: "16px" }} size="small" onClick={handleAddMember}>
-                            <AddCircleOutlineOutlinedIcon />
+                            <AddIcon />
                         </Button>
                     </div>
 
@@ -45,18 +49,36 @@ export default function AddMember() {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {members.map((member) => (
-                                        <TableRow>
+                                    {members.map((member, index) => (
+                                        <TableRow key={index}>
                                             <TableCell>
-                                                <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                                                    {member}
-                                                </Typography>
+                                                <div className="flex justify-between items-center">
+                                                    <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                                                        {member}
+                                                    </Typography>
+                                                    <Button
+                                                        variant="text"
+                                                        color="error"
+                                                        size="small"
+                                                        onClick={() => handleRemoveMember(index)}
+                                                    >
+                                                        x
+                                                    </Button>
+                                                </div>
                                             </TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
                             </Table>
                         </TableContainer>
+                    </div>
+
+                    <div className="mt-8">
+                        <Button variant="contained" color="success" disableElevation={true} fullWidth={true} sx={{ textTransform: "none" }} onClick={() => console.log(members)}>
+                            <Typography>
+                                Confirm
+                            </Typography>
+                        </Button>
                     </div>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import { Button, styled, Typography } from '@mui/material';
+import { Button, Paper, styled, TextField, Typography } from '@mui/material';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 import StepNav from '../../components/navigation/StepNav';
@@ -84,9 +84,22 @@ export default function UploadReceipt() {
                     )}
 
                     {file && (
-                        <div className='min-h-80 flex justify-center items-center'>
-                            <img src={file} />
+                        <div className='mb-8'>
+                            <Paper variant='outlined'>
+                                <div className='flex flex-col items-center p-4'>
+                                    <div className='max-h-80 flex justify-center items-center mb-4'>
+                                        <img src={file} alt="Uploaded preview" className='max-h-80 object-contain' />
+                                    </div>
+                                    <div className='w-full mb-2'>
+                                        <TextField label="Title" variant="standard" fullWidth required />
+                                    </div>
+                                    <div className='w-full'>
+                                        <TextField label="Description" variant="standard" fullWidth required />
+                                    </div>
+                                </div>
+                            </Paper>
                         </div>
+
                     )}
                 </div>
 
